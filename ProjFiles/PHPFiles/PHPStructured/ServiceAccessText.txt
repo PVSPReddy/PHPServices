@@ -1,0 +1,8 @@
+First called service is ReceiveService.php
+Here we get the service method and data if this is post service
+Then this data is transfered to ServiceController.php
+From here as per the method requested the values are transfered to UserService.php
+Here database connection isobtained from ConnectionService.php and Obtained data with sql query(generated) is executed
+and obtained response is returned to the called services.
+
+eg.: PHP/PHPServices/ReceiveService.php?userRequest=GetAllMovies
