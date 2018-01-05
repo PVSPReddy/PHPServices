@@ -25,6 +25,9 @@ class RequestHandler// extends ServerStatus
             case "AllUsersData":
                 return $response = $uServices -> AllUsers($data);
                 break;
+            case "GetCountriesData":
+                return $response = $uServices -> GetCountries();
+                break;
             default:
                 return $response = $uServices -> FaultMethod($data);
                 break;

@@ -199,6 +199,47 @@ class UserServices extends ServerStatus
     //This is the end point for a GetMovies and GetSongs service
 
 
+
+
+
+    //This is under single database
+    //This is the starting point for a GetCountries service
+    function GetCountries()
+    {
+        try
+        {
+            $conn = $this->Connection("CountriesDB");
+
+            $sql = "SELECT * from countriesdb.allcountriesdata";
+            $res_data = $conn->prepare($sql);
+            $res_data->execute();
+
+            // set the resulting array to associative
+            $_response = $res_data->setFetchMode(PDO::FETCH_ASSOC);
+            $response_ = $res_data->fetchAll();
+
+            $countries_data = $response_;
+            $response = array("message"=>"Service is successful",
+                             "code"=>"1",
+                              "Country_details"=>$countries_data
+                             );
+            $conn = null;
+            return $response;
+//            $conn->close();
+        }
+        catch(PDOException $e)
+        {
+            $countries_data = array();
+                $response = array("message"=>"Countries list are empty",
+                             "code"=>"0",
+                            "Country_details"=>$countries_data
+                             );
+                return $response;
+            //echo "Connection failed: " . $e->getMessage();
+        }
+    }
+    //This is the end point for a Countries service
+
     function AllUsers($data)
     {
 
