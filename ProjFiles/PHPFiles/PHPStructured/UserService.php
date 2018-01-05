@@ -210,7 +210,7 @@ class UserServices extends ServerStatus
         {
             $conn = $this->Connection("CountriesDB");
 
-            $sql = "SELECT * from countriesdb.allcountriesdata";
+            $sql = "SELECT * from countriesdb.allcountriesTemporarydata";
             $res_data = $conn->prepare($sql);
             $res_data->execute();
 
