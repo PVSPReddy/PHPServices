@@ -19,11 +19,11 @@ class RequestHandler// extends ServerStatus
             case "GetAllMovies":
                 return $response = $uServices -> GetMovies();
                 break;
-            case "AllUsersData":
-                return $response = $uServices -> AllUsers($data);
-                break;
             case "GetAllSongs":
                 return $response = $uServices -> GetSongs($data);
+                break;
+            case "AllUsersData":
+                return $response = $uServices -> AllUsers($data);
                 break;
             default:
                 return $response = $uServices -> FaultMethod($data);

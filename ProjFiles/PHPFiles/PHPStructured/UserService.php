@@ -5,13 +5,15 @@ require_once("ServerStatus.php");
 
 class UserServices extends ServerStatus
 {
-    function Connection()
+    function Connection($databaseName)
     {
         $getConnService = new GetConnectionService();
-        $conn = $getConnService -> getConnection();
+        $conn = $getConnService -> getConnection($databaseName);
         return $conn;
     }
 
+    //This is under single database
+    //This is the starting point for a registration and Login services
     function Register($data)
     {
         try
@@ -23,7 +25,7 @@ class UserServices extends ServerStatus
             $uMobileNo = $data['user_mobile_no'];
             $uEmailId = $data['user_email'];
 
-            $conn = $this->Connection();
+            $conn = $this->Connection("WebHostDB");
             $sql = "INSERT INTO webhostdb.userinfo (uname, password, first_name, last_name, mobile_no, email_id, profile_pic ) VALUES ( '$uName', '$uPwd', '$uFName', '$uLName', '$uMobileNo', '$uEmailId', 'no pic' )";
 
             $conn->exec($sql);
@@ -51,7 +53,7 @@ class UserServices extends ServerStatus
             $uPwd = $data['password'];
             //echo $uname;
             //echo $upwd;
-            $conn = $this->Connection();
+            $conn = $this->Connection("WebHostDB");
 
             $sql = "SELECT * from webhostdb.userinfo WHERE uname="."\"".$uName."\"";
             //echo $sql;
@@ -116,12 +118,18 @@ class UserServices extends ServerStatus
             //echo "Connection failed: " . $e->getMessage();
         }
     }
+    //This is the Ending point for a registration and Login services
 
+
+
+
+    //This is under single database
+    //This is the starting point for a GetMovies and GetSongs service
     function GetMovies()
     {
         try
         {
-            $conn = $this->Connection();
+            $conn = $this->Connection("MMPlayer");
 
             $sql = "SELECT * from mmplayerdb.mmplayermovies";
             $res_data = $conn->prepare($sql);
@@ -132,9 +140,9 @@ class UserServices extends ServerStatus
             $response_ = $res_data->fetchAll();
 
 //             "id" = $response[0]['id'];
-//                "mName" = $response[0]['movieName'];
-//                "mId" = $response[0]['movieId'];
-//                "noOfSongs" = $response[0]['noOfSongs'];
+//             "mName" = $response[0]['movieName'];
+//             "mId" = $response[0]['movieId'];
+//             "noOfSongs" = $response[0]['noOfSongs'];
 
             $movies_data = $response_;
             $response = array("message"=>"Service is successful",
@@ -162,7 +170,7 @@ class UserServices extends ServerStatus
         try
         {
             $movieId = $data['movieId'];
-            $conn = $this->Connection();
+            $conn = $this->Connection("MMPlayer");
             $sql = "SELECT * from mmplayerdb.mmplayersongs WHERE movieId="."\"".$movieId."\"";
             $res_data = $conn->prepare($sql);
             $res_data->execute();
@@ -188,6 +196,8 @@ class UserServices extends ServerStatus
             //echo "Connection failed: " . $e->getMessage();
         }
     }
+    //This is the end point for a GetMovies and GetSongs service
+
 
     function AllUsers($data)
     {

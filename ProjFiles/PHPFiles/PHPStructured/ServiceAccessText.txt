@@ -1,3 +1,5 @@
+this text file is only for the PHPStructured.Zip
+
 First called service is ReceiveService.php
 Here we get the service method and data if this is post service
 Then this data is transfered to ServiceController.php
